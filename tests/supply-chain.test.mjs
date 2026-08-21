@@ -19,6 +19,28 @@ test('dependency lock is an immutable Steve upstream commit', async () => {
   assert.equal(lock.ref, lock.commit);
 });
 
+test('immutable S3 candidate binds UI source registry to Greg fork and exact commit', async () => {
+  const manifest=JSON.parse(await readFile(new URL('../dist/releases/functional-s3-checkpoint-10d7ac0d/manifest.json', import.meta.url)));
+  const s3=manifest.variants.find(item=>item.id==='waveshare-s3-tubes-remote');
+  assert.equal(s3.source.repository,'https://github.com/theysayheygreg/WLEDtubes.git');
+  assert.equal(s3.source.commit,'10d7ac0d7e7f7407ba114195475111c74fe53629');
+  assert.equal(manifest.sourceRegistry[s3.sourceRef].repository,s3.source.repository);
+  assert.equal(manifest.sourceRegistry[s3.sourceRef].commit,s3.source.commit);
+});
+
+test('source registry substitution is rejected by the immutable release verifier', async () => {
+  const temp=await mkdtemp(join(tmpdir(),'easy-flash-s3-registry-'));
+  try {
+    await cp(new URL('../dist', import.meta.url),join(temp,'dist'),{recursive:true});
+    const current=JSON.parse(await readFile(join(temp,'dist/current.json'))),path=join(temp,'dist',current.manifest),manifest=JSON.parse(await readFile(path));
+    manifest.sourceRegistry['greg-s3-10d7ac0d'].repository='https://github.com/SteveEisner/WLEDtubes.git';
+    await writeFile(path,JSON.stringify(manifest,null,2)+'\n');
+    const result=verifyAt(temp,['--dist',join(temp,'dist')]);
+    assert.notEqual(result.status,0);
+    assert.match(result.stderr,/source authority|S3 source/i);
+  } finally { await rm(temp,{recursive:true,force:true}); }
+});
+
 test('production build-static refuses checked-in firmware without a fresh receipt', () => {
   const result=run('scripts/build-static.mjs', ['--receipt', 'missing-receipt.json']);
   assert.notEqual(result.status, 0);
