@@ -6,13 +6,13 @@
     "tree": "ec1cc5dc8218b11acca3759562fe8ad774d6f448"
   },
   "frozenFiles": {
-    "easy-flash/index.html": "7fec632aeb736b5191276cdcfa59d6c8f7e0c8af1c69c02cf0fe3f034c1aad3b",
-    "easy-flash/app.mjs": "49705c1f9e390a16412affd767c580f471eed8310e4788af77c3d67814ef2abe",
-    "easy-flash/p2p-seed.mjs": "6e1115c66b9f32f959b5f91a2d079b259b043e71a4c7df16e8fcf522a7294bc4",
+    "easy-flash/index.html": "0cdf48911a24904f41b998d60cff441a6005aae1ea780a86ff971a969b16e701",
+    "easy-flash/app.mjs": "8a7fa171652cf9c0495cb1ec32d48535fcb7038a38ee1d825f70175b398aa029",
+    "easy-flash/p2p-seed.mjs": "c4e9f042f410e8dbe36da5e378b774557a8b636f53a09cda70cba8ca7c560cf2",
     "easy-flash/local-flash.mjs": "fa1ab4b35fdce25d3b66a959d2a0c4bb786da61fbfc172d3b03894d8a7bd00e9",
     "easy-flash/hosted-release.mjs": "1a7f9fc5746aae920f092216dd128dd7f2ca3e799861e5b92f97d7f3a2cf919d",
     "easy-flash/safety-contract.mjs": "d67887969dfed5eddbb8accb7a7b5fc3c645c596abe56e53a6c9b7610f00d7ea",
-    "easy-flash/styles.css": "0dc3ae4145f3ba67a2ca6390cd33fea0629e80213fbb86eb79d436d18a313d47",
+    "easy-flash/styles.css": "226a02d5ee1b8281d50ce7c6b104a7032a22c4422dc5056b731af94818e3fe7c",
     "easy-flash/server.mjs": "42918c6dd64df41346b3fd5a2614b5fb279ba7f8460ed410f435f33fb43a8efc",
     "easy-flash/vendor/esptool-js/bundle.js": "ef7d5a237d3f273ecf546bcee65dddad90bd82cf02f22a980d1537e0cd79a152",
     "easy-flash/maintainer/index.html": "1904621a97b564c3919e5412f49b61bff954f09df3229f406ee12b5efb710c0a",
