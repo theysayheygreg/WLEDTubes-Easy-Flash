@@ -7,8 +7,8 @@
   },
   "frozenFiles": {
     "easy-flash/index.html": "7fec632aeb736b5191276cdcfa59d6c8f7e0c8af1c69c02cf0fe3f034c1aad3b",
-    "easy-flash/app.mjs": "a0fc5f822d7de92d970ec2d9b57b6c7387ecb5e9667bdced0b66f0548aacfb4b",
-    "easy-flash/p2p-seed.mjs": "a60888b1eecfd51794d32ff34edfe7dfab1125f9d3c87ed2607d3623f7999f91",
+    "easy-flash/app.mjs": "49705c1f9e390a16412affd767c580f471eed8310e4788af77c3d67814ef2abe",
+    "easy-flash/p2p-seed.mjs": "6e1115c66b9f32f959b5f91a2d079b259b043e71a4c7df16e8fcf522a7294bc4",
     "easy-flash/local-flash.mjs": "fa1ab4b35fdce25d3b66a959d2a0c4bb786da61fbfc172d3b03894d8a7bd00e9",
     "easy-flash/hosted-release.mjs": "1a7f9fc5746aae920f092216dd128dd7f2ca3e799861e5b92f97d7f3a2cf919d",
     "easy-flash/safety-contract.mjs": "d67887969dfed5eddbb8accb7a7b5fc3c645c596abe56e53a6c9b7610f00d7ea",
