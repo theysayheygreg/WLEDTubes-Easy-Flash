@@ -1,7 +1,7 @@
 {
-  "releaseId": "preview-s3-carrier-beb57bae-v51-native",
-  "manifest": "releases/preview-s3-carrier-beb57bae-v51-native/manifest.json",
-  "generatedAt": "2026-09-01T07:14:47.267Z",
+  "releaseId": "preview-p2p-local-605dbe99-v51-native",
+  "manifest": "releases/preview-p2p-local-605dbe99-v51-native/manifest.json",
+  "generatedAt": "2026-09-01T08:14:45.615Z",
   "provisional": true,
   "previewChannel": "local-s3-carrier-native-v51-matrix"
 }

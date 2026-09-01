@@ -3,7 +3,7 @@ import {createHash} from "node:crypto";
 import {cp,readFile,rm,writeFile} from "node:fs/promises";
 import {join,resolve} from "node:path";
 
-const RELEASE="preview-s3-carrier-beb57bae-v51-native",COMMIT="beb57baeb3a11c794bc373290b2304d8b005982b";
+const RELEASE="preview-p2p-local-605dbe99-v51-native",COMMIT="605dbe990b14a1fcc33e08bde9fabc5af0e1295d";
 const args=process.argv.slice(2),index=args.indexOf("--output"),out=resolve(index<0?"build/v51-preview-site":args[index+1]),staged=resolve("easy-flash/releases",RELEASE),hash=bytes=>createHash("sha256").update(bytes).digest("hex");
 const receipt=JSON.parse(await readFile(join(staged,"provenance/preview-receipt.json")));
 if(receipt.source.commit!==COMMIT||receipt.source.nativeReleaseVersion!==51||receipt.source.releaseVersionOverride!==null||receipt.matrix.length!==4)throw Error("staged merged-main native-v51 matrix identity mismatch");

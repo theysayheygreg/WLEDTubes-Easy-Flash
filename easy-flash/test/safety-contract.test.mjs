@@ -55,7 +55,7 @@ test("prepared token, exact port, bound target, and physical model gate the pre-
 });
 
 test("propagating Dig2Go install admits only its exact action and cannot cross with ordinary USB",async()=>{
-	const release=JSON.parse(await readFile(new URL("../releases/preview-s3-carrier-beb57bae-v51-native/manifest.json",import.meta.url))),variant=release.variants.find(({id})=>id==="quinled-dig2go"),ordinary={...variant.artifacts.find(({transport})=>transport==="usb"),url:"https://flash.test/releases/test/firmware/ordinary.bin"},propagating={...variant.artifacts.find(({transport})=>transport==="usb-propagating"),url:"https://flash.test/releases/test/firmware/propagating.bin"};
+	const release=JSON.parse(await readFile(new URL("../releases/preview-p2p-local-605dbe99-v51-native/manifest.json",import.meta.url))),variant=release.variants.find(({id})=>id==="quinled-dig2go"),ordinary={...variant.artifacts.find(({transport})=>transport==="usb"),url:"https://flash.test/releases/test/firmware/ordinary.bin"},propagating={...variant.artifacts.find(({transport})=>transport==="usb-propagating"),url:"https://flash.test/releases/test/firmware/propagating.bin"};
 	const rejectedPropagating=runtimeFixture({fetchArtifact:propagating}),propagatingEvidence=await boundEvidence(rejectedPropagating,variant,propagating);
 	await assert.rejects(rejectedPropagating.runtime.installConnectedController({variant,artifact:propagating,sessionToken:propagatingEvidence.token,port:propagatingEvidence.port,candidateAction:confirmed(variant),onStatus(){},onProgress(){}}),/candidate action|stale/i);
 	assert.equal(rejectedPropagating.counts().writes,0);

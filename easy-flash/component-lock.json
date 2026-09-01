@@ -3,12 +3,12 @@
   "authority": {
     "branch": "codex/easyflash-p2p-install-fix-v51",
     "knownGoodHead": "native-v51-p2p-install-runtime",
-    "tree": "a70f6ba4c36da82000876864854e0614a93baca4"
+    "tree": "ec1cc5dc8218b11acca3759562fe8ad774d6f448"
   },
   "frozenFiles": {
-    "easy-flash/index.html": "e84fb337d2225ca950dc0e46d5f4c9a45a81c71c86f9e1bc7a34b061671a27e9",
-    "easy-flash/app.mjs": "3880586d64511d7677bcdc9183259dc3654283566cc61d4088e76d55ed6b63c8",
-    "easy-flash/p2p-seed.mjs": "292984a917550ccbf5cb537bece2a67be60f0d05072e50e9d076c4c84b9f4cc1",
+    "easy-flash/index.html": "7fec632aeb736b5191276cdcfa59d6c8f7e0c8af1c69c02cf0fe3f034c1aad3b",
+    "easy-flash/app.mjs": "a0fc5f822d7de92d970ec2d9b57b6c7387ecb5e9667bdced0b66f0548aacfb4b",
+    "easy-flash/p2p-seed.mjs": "a60888b1eecfd51794d32ff34edfe7dfab1125f9d3c87ed2607d3623f7999f91",
     "easy-flash/local-flash.mjs": "fa1ab4b35fdce25d3b66a959d2a0c4bb786da61fbfc172d3b03894d8a7bd00e9",
     "easy-flash/hosted-release.mjs": "1a7f9fc5746aae920f092216dd128dd7f2ca3e799861e5b92f97d7f3a2cf919d",
     "easy-flash/safety-contract.mjs": "d67887969dfed5eddbb8accb7a7b5fc3c645c596abe56e53a6c9b7610f00d7ea",
@@ -36,11 +36,11 @@
     "easy-flash/p2p-seed.mjs",
     "easy-flash/test/p2p-seed.test.mjs"
   ],
-  "receiptPath": "dist/releases/preview-s3-carrier-beb57bae-v51-native/provenance/preview-receipt.json",
+  "receiptPath": "dist/releases/preview-p2p-local-605dbe99-v51-native/provenance/preview-receipt.json",
   "targetArtifactSha256": {
-    "quinled-dig2go": "156946a3da372023ed767f0ea31f0a1238e658700e48ce5a3553568e3a073764",
-    "athom-c3-tubes": "70f724b6bceec6292af6ed4786cf1b7a93076d3c4ad082810a675f8d5effa626",
-    "waveshare-s3-tubes-remote": "d6fe6b4969dfe964bf293f40be1af0dd61af21cd117cc05cc988046eb5e7ea4d"
+    "quinled-dig2go": "f033aa77ce30435b11547c90df581745a2f233284e41cb96b297e49a57b816c2",
+    "athom-c3-tubes": "2fc1000261127ca24bf2ba2d99132fb1256ad1f30fab538f47dca003280fd94e",
+    "waveshare-s3-tubes-remote": "bb5fe3cbac5bc87944af33cd2b25f7b0a842a01692cc59ad9239767af3604ebe"
   },
   "requiredUiMarkers": [
     "Flash",
