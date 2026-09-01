@@ -32,11 +32,11 @@ test("accepts an S3 bootloader at offset zero but rejects invalid offsets", asyn
 });
 
 class SerialMock extends EventTarget { constructor(port){super();this.port=port;this.requests=0;} async requestPort(){this.requests++;return this.port;} disconnect(port){const event=new Event("disconnect");Object.defineProperty(event,"port",{value:port});this.dispatchEvent(event);} }
-function runtimeFixture({connectChip="ESP32",changedInfo=false}={}) {
+function runtimeFixture({connectChip="ESP32",changedInfo=false,fetchArtifact=null}={}) {
 	const port={getInfo:()=>changedInfo?{usbVendorId:9,usbProductId:2}:{usbVendorId:1,usbProductId:2}};let calls=0,writes=0,closed=0,boundary=0,lastWrite=null;const serial=new SerialMock(port);
 	class Loader { async main(){calls++;return connectChip;} async writeFlash(args){writes++;lastWrite=args;} async after(){} }
 	class Transport { async disconnect(){closed++;} }
-	return {serial,port,counts:()=>({calls,writes,closed,boundary}),lastWrite:()=>lastWrite,runtime:createFlashRuntime({serial,Loader,TransportClass:Transport,cryptoImpl:webcrypto,delay:async()=>{},fetchImpl:async()=>{const manifest=await loadFirmwareManifest(),artifact=manifest.variants[0].artifacts[0];return new Response(await readFile(new URL(`../${artifact.path}`,import.meta.url)));}}),mark:()=>boundary++};
+	return {serial,port,counts:()=>({calls,writes,closed,boundary}),lastWrite:()=>lastWrite,runtime:createFlashRuntime({serial,Loader,TransportClass:Transport,cryptoImpl:webcrypto,delay:async()=>{},fetchImpl:async()=>{const manifest=await loadFirmwareManifest(),artifact=fetchArtifact||manifest.variants[0].artifacts[0];return new Response(await readFile(new URL(`../${artifact.path}`,import.meta.url)));}}),mark:()=>boundary++};
 }
 
 function fixtureVariant(manifest){const variant=structuredClone(manifest.variants[0]);variant.id="quinled-dig2go";variant.target.printedModel=variant.target.board;variant.bootIdentity={version:1,target:variant.id,source:"a".repeat(40),release:"16.0.1",tubes:14};return variant;}
@@ -52,6 +52,20 @@ test("prepared token, exact port, bound target, and physical model gate the pre-
 	// A rejected assertion does not consume the prepared session.
 	await fixture.runtime.installConnectedController({...base,candidateAction:confirmed(variant)});assert.equal(fixture.counts().boundary,1);assert.equal(fixture.counts().writes,1);
 	await assert.rejects(fixture.runtime.installConnectedController({...base,candidateAction:confirmed(variant)}),/connect.*again/i);
+});
+
+test("propagating Dig2Go install admits only its exact action and cannot cross with ordinary USB",async()=>{
+	const release=JSON.parse(await readFile(new URL("../releases/preview-s3-carrier-beb57bae-v51-native/manifest.json",import.meta.url))),variant=release.variants.find(({id})=>id==="quinled-dig2go"),ordinary={...variant.artifacts.find(({transport})=>transport==="usb"),url:"https://flash.test/releases/test/firmware/ordinary.bin"},propagating={...variant.artifacts.find(({transport})=>transport==="usb-propagating"),url:"https://flash.test/releases/test/firmware/propagating.bin"};
+	const rejectedPropagating=runtimeFixture({fetchArtifact:propagating}),propagatingEvidence=await boundEvidence(rejectedPropagating,variant,propagating);
+	await assert.rejects(rejectedPropagating.runtime.installConnectedController({variant,artifact:propagating,sessionToken:propagatingEvidence.token,port:propagatingEvidence.port,candidateAction:confirmed(variant),onStatus(){},onProgress(){}}),/candidate action|stale/i);
+	assert.equal(rejectedPropagating.counts().writes,0);
+	const admittedPropagating=runtimeFixture({fetchArtifact:propagating}),admittedEvidence=await boundEvidence(admittedPropagating,variant,propagating);
+	await admittedPropagating.runtime.installConnectedController({variant,artifact:propagating,sessionToken:admittedEvidence.token,port:admittedEvidence.port,candidateAction:confirmed(variant,{label:"Install propagating Dig2Go firmware",artifactSha256:propagating.sha256}),onStatus(){},onProgress(){}});
+	assert.equal(admittedPropagating.counts().writes,1);
+	const rejectedOrdinary=runtimeFixture(),ordinaryEvidence=await boundEvidence(rejectedOrdinary,variant,ordinary);
+	await assert.rejects(rejectedOrdinary.runtime.installConnectedController({variant,artifact:ordinary,sessionToken:ordinaryEvidence.token,port:ordinaryEvidence.port,candidateAction:confirmed(variant,{label:"Install propagating Dig2Go firmware"}),onStatus(){},onProgress(){}}),/candidate action|stale/i);
+	assert.equal(rejectedOrdinary.counts().writes,0);
+	assert.throws(()=>validateMergedImageStructure({...variant.target,hardwareFamily:"athom-c3-tubes"},propagating),/transport contract mismatch/i);
 });
 
 test("wrong target/model, swapped USB device, and serial disconnect invalidate safely",async()=>{

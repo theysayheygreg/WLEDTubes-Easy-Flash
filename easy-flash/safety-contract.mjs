@@ -26,7 +26,8 @@ function nonNegativeInteger(value, label) {
 
 export function validateMergedImageStructure(target, artifact) {
 	positiveInteger(target?.flashSizeBytes, "Target flash size");
-	if (artifact?.transport !== "usb" || artifact.kind !== "complete-merged-image" || artifact.offset !== 0) throw new Error("USB merged-image transport contract mismatch");
+	const validTransport=artifact?.transport === "usb" || (artifact?.transport === "usb-propagating" && target?.hardwareFamily === "quinled-dig2go");
+	if (!validTransport || artifact.kind !== "complete-merged-image" || artifact.offset !== 0) throw new Error("USB merged-image transport contract mismatch");
 	positiveInteger(artifact.sizeBytes, "Artifact size");
 	if (!SHA256.test(artifact.sha256 || "")) throw new Error("Artifact SHA-256 is invalid");
 	if (artifact.sizeBytes > target.flashSizeBytes) throw new Error("Artifact exceeds target flash size");
